@@ -1,0 +1,87 @@
+# Start the Project
+
+Create a "Single View Application" called `FingerPaint`.
+
++ Disable launch screen.
++ Disable auto layout & size classes.
+
+# Adding the Test Suite to the Project
+
+The test suite is in a separate git repo from your project's own repo. This way we can checkout different versions of the test suite for each step without affecting the history of your own app.
+
+#exercise[test=testPathDrawing]
+  # Add the test suite to the project
+
+  #step
+    Clone the test repo by running the following command from the project root:
+
+    ```
+    git clone https://github.com/hayeah/ios-FingerPaint-spec.git FingerPaintTests/spec --branch init
+    ```
+
+  #step
+    Create the `.gitignore` file, and add `FingerPaintTests/spec` to it:
+
+    ```
+    # .gitignore
+    FingerPaintTests/spec
+    ```
+
+  #step
+    Once the test repo is cloned, we need to add the test's files to Xcode.
+
+    #screenshot[src=add-files-menu-selection.png]
+      #caption Add the test's files to Xcode
+
+      + Right-click on `FingerPaintTests`
+      + Select `Add Files`
+
+    #screenshot[src=add-files-dialog.png]
+      #caption Add the test suite directory to the test target as a group.
+
+      + Select the folder we just cloned.
+      + Select "Create groups".
+      + Add to the `FingerPaintTests` target.
+
+    #screenshot[src=spec-file-added.png]
+      #caption You should see `FingerPaintTests/spec/SpecTests.swift` show up in Xcode
+
+  #step
+    Run the test now (`cmd-u`), and the test suite should pass (because it doesn't test anything yet!)
+
+    #screenshot[src=init-test-passed.png]
+      #caption Passint tests
+
+#tip
+  The yellow folders you see in Xcode are "groups". They are basically Xcode's own directory structure, which can be different from the file system's directory structure if you want to organize your source files differently.
+
+# Drawing by Touches
+
+We'll now implement interactive drawing by responding to touches.
+
+#video[src=demo-drawing.mp4]
+
+To get the CanvasView to respond to touches, we can override the touchesBegan method:
+
+```[swift]
+override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+  let t = touches.anyObject() as UITouch
+  let point = t.locationInView(self)
+  println("touch: \(point)")
+}
+```
+
+Touch the screen, and you'd see where the touch occured:
+
+```
+touch: (149.5,195.0)
+touch: (100.0,279.0)
+touch: (250.0,284.0)
+touch: (245.5,220.0)
+touch: (188.5,392.5)
+touch: (132.5,421.0)
+touch: (172.0,358.5)
+touch: (137.0,212.5)
+```
+
+There can be more than one touches in the NSSet if multi-touch is enabled (multipleTouchEnabled). But since multi-touch is disabled by default, there would be only one UITouch object in touches, and we can fetch it with the anyObject method.
