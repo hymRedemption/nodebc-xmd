@@ -5,7 +5,7 @@
 #overview
   熟悉 NodeJS 开发环境，复习 JavaScript
 
-#lesson[day=1 name=create-npm-package]
+#lesson[day=1 name=finger-paint]
 #lesson[day=2 name=setting-up-mocha]
 #lesson[day=3 name=using-coffeescript]
 #lesson[day=4 name=class-system]
